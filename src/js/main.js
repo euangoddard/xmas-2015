@@ -1,4 +1,4 @@
-var camera, scene, renderer;
+var camera, scene, renderer, controls;
 var objects = [];
 var sphere = [];
 

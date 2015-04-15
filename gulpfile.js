@@ -12,13 +12,21 @@ var ghPages = require('gh-pages');
 var gulp = require('gulp');
 var gulpif = require('gulp-if');
 var inject = require('gulp-inject');
+var insert = require('gulp-insert');
+var ngAnnotate = require('gulp-ng-annotate');
 var sass = require('gulp-sass');
 var swPrecache = require('sw-precache');
 var uglify = require('gulp-uglify');
 var webserver = require('gulp-webserver');
 
 
-var IS_RELEASE = !!argv.release;
+var CONFIG = {
+  intro:
+    '(function (angular, _) {\n' +
+    '    "use strict";\n',
+  outro: '\n}(window.angular, window._));\n',
+  is_release: !!argv.release
+};
 
 
 gulp.task('clean', function() {
@@ -63,15 +71,18 @@ gulp.task('favicons', ['build-html'], function (done) {
 
 
 gulp.task('build-js', function () {
-    return gulp.src(['./src/js/**/*.js'])
-      .pipe(concat('app.js'))
-      .pipe(gulpif(IS_RELEASE, uglify()))
-      .pipe(gulp.dest('./dist/js'));
+  return gulp.src(['./src/js/**/*.js'])
+    .pipe(insert.prepend(CONFIG.intro))
+    .pipe(insert.append(CONFIG.outro))
+    .pipe(ngAnnotate())
+    .pipe(concat('app.js'))
+    .pipe(gulpif(CONFIG.is_release, uglify()))
+    .pipe(gulp.dest('./dist/js'));
 });
 
 
 gulp.task('sass', function () {
-  var output_style = IS_RELEASE ? 'compressed' : 'expanded';
+  var output_style = CONFIG.is_release ? 'compressed' : 'expanded';
 
   return gulp.src('./src/scss/**/*.scss')
     .pipe(sass({
@@ -88,7 +99,9 @@ gulp.task('sass', function () {
 gulp.task('build-html', ['build-js', 'copy-js-libs', 'sass'], function () {
   var target = gulp.src('./src/index.html');
   var sources = gulp.src([
+    './dist/js/lib/angular.min.js',
     './dist/js/lib/three.min.js',
+    './dist/js/lib/firebase.js',
     './dist/js/lib/**/*.js',
     './dist/js/**/*.js',
     './dist/css/**/*.css'

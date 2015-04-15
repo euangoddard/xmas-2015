@@ -1,22 +1,48 @@
 <!doctype html>
 <html>
 <head>
-  <title>Vehicles</title>
+  <title>Merry Christmas 2015!</title>
 
   <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
 
   <meta name="author" content="Euan Goddard" />
-  <meta name="description" content="Chrsitmas card for 2015" />
+  <meta name="description" content="Christmas card for 2015" />
 
   <link rel="canonical" href="https://xmas-2015.euans.space" />
-
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
   <!-- inject:css -->
   <!-- endinject -->
 </head>
-<body>
-  <div id="container"></div>  
+<body ng-app="xmas-2015">
+  <header ng-controller="AuthController as auth_controller">
+    <button ng-click="auth_controller.login_with_google()">
+      <i class="fa fa-google"></i>
+      Login with Google
+    </button>
+    <button ng-click="auth_controller.login_with_twitter()">
+      <i class="fa fa-twitter"></i>
+      Login with Twitter
+    </button>
+    <button ng-click="auth_controller.login_with_facebook()">
+      <i class="fa fa-facebook"></i>
+      Login with Facebook
+    </button>
+    <button ng-click="auth_controller.login_with_facebook()">
+      <i class="fa fa-user"></i>
+      Login with email
+    </button>
+
+    <p ng-if="authData">
+      Logged in user: <strong>{{ authData.uid }} {{ authData.google.displayName }}</strong>
+      <img ng-src="{{ authData.twitter.cachedUserProfile.profile_image_url_https }}"/></p>
+      <img ng-src="{{ authData.facebook.cachedUserProfile.picture.data.url }}"/></p>
+    <p ng-if="error">Error: <strong>{{ error }}</strong></p>
+
+  </header>
+  <!-- <div id="container"></div> -->
+
 
   <!-- inject:js -->
   <!-- endinject -->
