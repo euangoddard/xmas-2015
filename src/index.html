@@ -35,10 +35,11 @@
       Login with email
     </button>
 
-    <p ng-if="authData">
-      Logged in user: <strong>{{ authData.uid }} {{ authData.google.displayName }}</strong>
-      <img ng-src="{{ authData.twitter.cachedUserProfile.profile_image_url_https }}"/></p>
-      <img ng-src="{{ authData.facebook.cachedUserProfile.picture.data.url }}"/></p>
+    <p ng-if="person.name">
+      {{ person.name }}
+      {{ person.picture_url }}
+    </p>
+
     <p ng-if="error">Error: <strong>{{ error }}</strong></p>
 
   </header>
