@@ -1,10 +1,35 @@
 var app = angular.module('xmas-2015', ['firebase']);
+return
 
 
 app.controller('MainController', function ($scope, $firebaseArray) {
 	var ref = new Firebase('https://xmas-2015.firebaseio.com/cards');
 
 	$scope.cards = $firebaseArray(ref);
+});
+
+
+app.controller('AvatarController', function ($scope) {
+  $scope.$watch('name', function (name) {
+    if (name) {
+      var pattern = Trianglify({
+          width: 600, 
+          height: 600,
+          seed: name
+      });
+      $scope.avatar.url = pattern.png();
+    } else {
+      $scope.avatar = {};
+    }
+  });
+
+  $scope.avatar = {};
+});
+
+app.factory('Avatar', function () {
+
+
+  return {};
 });
 
 

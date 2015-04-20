@@ -12,9 +12,14 @@ function init() {
 
     scene = new THREE.Scene();
 
-    for (var i=0; i<120; i++) {
+    for (var i=0; i<150; i++) {
         var element = document.createElement('div');
         element.classList.add('card');
+        var pattern = Trianglify({
+            width: 200, 
+            height: 200
+        });
+        element.style.backgroundImage = 'url(' + pattern.png() + ')'
         element.textContent = i;
         var object = new THREE.CSS3DObject(element);
         object.position.x = Math.random() * 4000 - 2000;
@@ -35,9 +40,9 @@ function init() {
 
         var object = new THREE.Object3D();
 
-        object.position.x = 800 * Math.cos( theta ) * Math.sin( phi );
-        object.position.y = 800 * Math.sin( theta ) * Math.sin( phi );
-        object.position.z = 800 * Math.cos( phi );
+        object.position.x = 1000 * Math.cos( theta ) * Math.sin( phi );
+        object.position.y = 1000 * Math.sin( theta ) * Math.sin( phi );
+        object.position.z = 1000 * Math.cos( phi );
 
         vector.copy(object.position).multiplyScalar(2);
         object.lookAt(vector);
@@ -45,7 +50,38 @@ function init() {
 
     }
 
-    //
+    // cube
+    var cube = [];
+    var faces = [
+        {fixed: 'z', a: 'x', b: 'y'},
+        {fixed: 'x', a: 'y', b: 'z'},
+        {fixed: 'y', a: 'x', b: 'z'}
+    ];
+    for (var i=0; i < faces.length; i++) {
+        var face = faces[i];
+        for (var j=-2; j < 3; j++) {
+            for (var k=-2; k < 3; k++) {
+                var object_plus = new THREE.Object3D();
+                object_plus.position[face.fixed] = 500;
+                object_plus.position[face.a] = 200 * j;
+                object_plus.position[face.b] = 200 * k;
+
+                var object_minus = new THREE.Object3D();
+                object_minus.position[face.fixed] = -500;
+                object_minus.position[face.a] = 200 * j;
+                object_minus.position[face.b] = 200 * k;
+                
+                vector.copy(object_minus.position).multiplyScalar(2);
+                object_plus.lookAt(vector);
+                cube.push(object_plus);
+                vector.copy(object_plus.position).multiplyScalar(2);
+                object_minus.lookAt(vector);
+                cube.push(object_minus);
+            }
+        }
+    }
+
+
 
     renderer = new THREE.CSS3DRenderer();
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -61,7 +97,7 @@ function init() {
     controls.addEventListener('change', render);
 
     document.addEventListener('dblclick', function (event) {
-        transform(sphere, 2000);
+        transform(cube, 2000);
     }, false);
 
     //

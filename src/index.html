@@ -16,6 +16,7 @@
   <!-- endinject -->
 </head>
 <body ng-app="xmas-2015">
+<!--
   <header ng-controller="AuthController as auth_controller">
     <button ng-click="auth_controller.login_with_google()">
       <i class="fa fa-google"></i>
@@ -41,7 +42,13 @@
     <p ng-if="error">Error: <strong>{{ error }}</strong></p>
 
   </header>
-  <!-- <div id="container"></div> -->
+
+  <footer ng-controller="AvatarController as avatar_controller">
+    <input type="text" ng-model="name" />
+    <img ng-if="avatar.url" ng-src="{{ avatar.url }}" width="600" height="600" alt="{{ name }}" />
+  </footer>
+-->
+  <div id="container"></div>
 
 
   <!-- inject:js -->
