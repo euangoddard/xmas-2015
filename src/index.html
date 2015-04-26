@@ -16,20 +16,48 @@
   <!-- endinject -->
 </head>
 <body ng-app="xmas-2015">
-<!--
   <header ng-controller="AuthController as auth_controller">
-    <button ng-click="auth_controller.login_with_google()">
-      <i class="fa fa-google"></i>
-      Login with Google
-    </button>
-    <button ng-click="auth_controller.login_with_twitter()">
-      <i class="fa fa-twitter"></i>
-      Login with Twitter
-    </button>
-    <button ng-click="auth_controller.login_with_facebook()">
-      <i class="fa fa-facebook"></i>
-      Login with Facebook
-    </button>
+    <div class="container">
+      <div class="grid-12">
+        <h1>Introduce yourself</h1>
+      </div>
+    </div>
+    <div class="container">
+      <div class="grid-5">
+        <h2>Use a social account</h2>
+        <ul>
+          <li>
+            <button ng-click="auth_controller.login_with_google()">
+              <i class="fa fa-google"></i>
+              Login with Google
+            </button>
+          </li>
+          <li>
+            <button ng-click="auth_controller.login_with_twitter()">
+              <i class="fa fa-twitter"></i>
+              Login with Twitter
+            </button>
+          </li>
+          <li>
+            <button ng-click="auth_controller.login_with_facebook()">
+              <i class="fa fa-facebook"></i>
+              Login with Facebook
+            </button>
+          </li>
+        </ul>
+      </div>
+      <div class="grid-2">
+        <h1>or</h1>
+      </div>
+      <div class="grid-5">
+        <h2>Enter by hand</h2>
+          <form ng-submit="auth_controller.set_custom_data()">
+            <input type="text" ng-model="custom_person.name" required placeholder="your name">
+            <input type="file" accept="image/*" capture="camera" ng-change="this.set_custom_image($event)"/>
+            <button type="submit">Go</button>
+          </form>
+      </div>
+    </div>
     <button ng-click="auth_controller.login_with_facebook()">
       <i class="fa fa-user"></i>
       Login with email
@@ -48,8 +76,8 @@
     <input type="text" ng-model="name" />
     <img ng-if="avatar.url" ng-src="{{ avatar.url }}" width="600" height="600" alt="{{ name }}" />
   </footer>
--->
-  <div id="container"></div>
+  
+  <!-- <div id="container"></div> -->
 
 
   <!-- inject:js -->
